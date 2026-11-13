@@ -1,1 +1,1 @@
-{ "name": "portfolio-tools", "private": true, "scripts": { "docs": "node build-docs.js .. .." }, "dependencies": { "docx": "^9.5.0" } }
+{"name":"portfolio-tools","private":true,"scripts":{"docs":"node build-docs.js .. .."},"dependencies":{"docx":"^9.5.0","qrcode":"^1.5.4"}}

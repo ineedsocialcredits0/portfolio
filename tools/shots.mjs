@@ -1,0 +1,14 @@
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const puppeteer = require('C:/salita/node_modules/puppeteer-core');
+const out = process.argv[2];
+const b = await puppeteer.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe', headless: true });
+const p = await b.newPage();
+await p.emulateMediaFeatures([{ name: 'prefers-color-scheme', value: 'light' }]);
+await p.setViewport({ width: 1280, height: 800, deviceScaleFactor: 2 });
+await p.goto('https://earldecastro-portfolio.vercel.app/', { waitUntil: 'networkidle0' });
+await p.evaluate(async () => { await document.fonts.ready; for (const i of document.images) { i.loading = 'eager'; if (!i.complete) await new Promise(r => { i.onload = i.onerror = r; }); } });
+await p.addStyleTag({ content: '.nav{position:static!important}' });
+await p.screenshot({ path: out + '/portfolio-top.png', clip: { x: 0, y: 0, width: 1280, height: 800 } });
+await p.screenshot({ path: out + '/Earl-De-Castro-Digital-Portfolio-Full.png', fullPage: true });
+await b.close(); console.log('ok');
