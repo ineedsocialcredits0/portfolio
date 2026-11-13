@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Earl Dion De Castro · Portfolio</title>
+<meta name="description" content="Earl Dion I. De Castro — BS Information Technology student and full-stack web developer. Builder of SaLitA, an AI speech coaching system.">
+<link rel="icon" href="images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f8f7; --card:#ffffff; --text:#14231e; --muted:#4f6660; --line:#dde5e2;
+  --accent:#0f6e55; --accent2:#1fae84; --sun:#ffd166; --chip:#e7f3ee;
+}
+@media (prefers-color-scheme:dark){
+  :root{ --bg:#0c1512; --card:#13201c; --text:#e8f1ee; --muted:#9db3ac; --line:#24352f;
+    --accent:#3fd3a2; --accent2:#1fae84; --chip:#1a2c26; }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 Inter,system-ui,sans-serif}
+a{color:var(--accent)}
+h1,h2,h3{font-family:"Space Grotesk",sans-serif;line-height:1.15;margin:0 0 .5em}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
+nav .logo{font-family:"Space Grotesk";font-weight:700;text-decoration:none;color:var(--text)}
+nav .logo span{color:var(--accent)}
+nav ul{display:flex;gap:20px;list-style:none;margin:0;padding:0}
+nav ul a{color:var(--muted);text-decoration:none;font-weight:500;font-size:15px}
+nav ul a:hover{color:var(--text)}
+@media(max-width:640px){nav ul{display:none}}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:999px;font-weight:600;text-decoration:none;border:1.5px solid var(--accent);font-size:15px}
+.btn.primary{background:var(--accent);color:#fff}
+@media (prefers-color-scheme:dark){.btn.primary{color:#06231a}}
+.btn.ghost{color:var(--accent)}
+header.hero{padding:80px 0 60px}
+.hero .wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:center}
+@media(max-width:860px){.hero .wrap{grid-template-columns:1fr}}
+.kicker{display:inline-block;background:var(--chip);color:var(--accent);font-weight:600;font-size:13px;padding:5px 12px;border-radius:999px;margin-bottom:16px}
+.hero h1{font-size:clamp(36px,6vw,58px)}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p.lead{font-size:18px;color:var(--muted);max-width:560px}
+.hero .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.shot{border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 20px 50px -20px rgba(0,0,0,.35);background:var(--card)}
+.shot img{display:block;width:100%;height:auto}
+section{padding:64px 0;border-top:1px solid var(--line)}
+section h2{font-size:32px}
+.sub{color:var(--muted);max-width:640px;margin-bottom:32px}
+.grid{display:grid;gap:20px}
+.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:repeat(2,1fr)}
+@media(max-width:860px){.g3,.g2{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px}
+.card h3{font-size:19px}
+.card p{color:var(--muted);margin:0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:28px 0}
+@media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.stat b{display:block;font-family:"Space Grotesk";font-size:28px;color:var(--accent)}
+.stat span{color:var(--muted);font-size:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:var(--chip);color:var(--text);font-size:14px;padding:6px 12px;border-radius:999px;font-weight:500}
+.feature{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;margin-top:40px}
+.feature.flip .shot{order:2}
+@media(max-width:860px){.feature{grid-template-columns:1fr}.feature.flip .shot{order:0}}
+.feature ul{padding-left:20px;color:var(--muted);margin:0}
+.feature li{margin:6px 0}
+.timeline .item{border-left:3px solid var(--accent2);padding:2px 0 18px 20px}
+.timeline .when{font-size:14px;color:var(--muted);font-weight:600}
+.contact{text-align:center}
+.contact .actions{justify-content:center;display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+footer{padding:28px 0;color:var(--muted);font-size:14px;text-align:center;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+  <a class="logo" href="#top">Earl<span>.</span>dev</a>
+  <ul><li><a href="#about">About</a></li><li><a href="#salita">SaLitA</a></li><li><a href="#skills">Skills</a></li><li><a href="#education">Education</a></li><li><a href="#contact">Contact</a></li></ul>
+  <a class="btn primary" href="Earl-De-Castro-Resume.docx" download>Résumé</a>
+</div></nav>
+
+<header class="hero" id="top"><div class="wrap">
+  <div>
+    <span class="kicker">BS Information Technology · Full-stack developer</span>
+    <h1>Hi, I'm Earl Dion.<br>I build <em>full-stack apps</em> that people actually use.</h1>
+    <p class="lead">IT student at STI College San Jose del Monte. I designed, built, secured and deployed <strong>SaLitA</strong> on my own — an AI speech coach for Filipino learners, live on the web and on Android.</p>
+    <div class="actions">
+      <a class="btn primary" href="https://salita.me" target="_blank" rel="noopener">Try SaLitA live ↗</a>
+      <a class="btn ghost" href="#salita">See the case study</a>
+    </div>
+  </div>
+  <div class="shot"><img src="images/speech-hero-light.webp" alt="SaLitA Speech Practice results screen" width="1200" height="750"></div>
+</div></header>
+
+<section id="about"><div class="wrap">
+  <h2>About me</h2>
+  <p class="sub">I'm a largely self-taught developer who learns by shipping. I like taking a real problem from idea to a working, deployed product — database, backend, frontend, mobile and security included.</p>
+  <div class="grid g3">
+    <div class="card"><h3>End-to-end builder</h3><p>React frontend, Flask API, PostgreSQL with row-level security, and an Android app — all from one codebase.</p></div>
+    <div class="card"><h3>Security-minded</h3><p>Ran my own attack tests against my system (SQL injection, XSS, privilege escalation, upload abuse) and fixed what I found.</p></div>
+    <div class="card"><h3>User-first</h3><p>Every screen built for real learners and teachers: dark mode, phone layout, accessibility contrast, and plain-language feedback.</p></div>
+  </div>
+</div></section>
+
+<section id="salita"><div class="wrap">
+  <span class="kicker">Featured project · Capstone</span>
+  <h2>SaLitA — AI speech coaching for Filipino learners</h2>
+  <p class="sub">A translanguaging-based AI speech coach that helps students who struggle with English speaking confidence. Taglish is treated as a bridge, not a mistake. Solo-built: design, code, database, AI integration, deployment.</p>
+  <div class="stats">
+    <div class="stat"><b>3</b><span>user roles (Learner, Teacher, Super Admin)</span></div>
+    <div class="stat"><b>38</b><span>database tables with RLS</span></div>
+    <div class="stat"><b>25/25</b><span>attack tests blocked</span></div>
+    <div class="stat"><b>Web + APK</b><span>one React codebase</span></div>
+  </div>
+  <div class="chips">
+    <span class="chip">React</span><span class="chip">Vite</span><span class="chip">Tailwind CSS</span><span class="chip">Flask (Python)</span><span class="chip">Supabase</span><span class="chip">PostgreSQL + RLS</span><span class="chip">Capacitor (Android)</span><span class="chip">Whisper speech-to-text</span><span class="chip">Groq / Gemini LLMs</span><span class="chip">Vercel</span>
+  </div>
+
+  <div class="feature">
+    <div class="shot"><img src="images/drill-light.webp" alt="Pronunciation drill screen" loading="lazy"></div>
+    <div><h3>AI speech analysis with explainable scoring</h3>
+      <ul>
+        <li>Records the learner, transcribes with Whisper (Groq, with Cloudflare as automatic backup).</li>
+        <li>My own code detects filler words, Taglish %, pace and long pauses; an LLM checks grammar and whether the answer is on topic.</li>
+        <li>Transparent score: English use 40% · fluency 30% · grammar 30% × relevance — easy to defend and explain.</li>
+        <li>Pronunciation drills for 15 sounds Filipino speakers find hard (F/P, V/B, TH…).</li>
+      </ul></div>
+  </div>
+
+  <div class="feature flip">
+    <div class="shot"><img src="images/conversation-light.webp" alt="AI conversation coach" loading="lazy"></div>
+    <div><h3>An AI coach that knows your progress</h3>
+      <ul>
+        <li>Chat coach that reads the learner's own scores, quizzes and activities (never other people's data).</li>
+        <li>Voice messages, saved chat history, and guardrails: it helps learners understand but never writes graded answers.</li>
+        <li>Daily usage limits per person so one user can't drain the free AI quotas.</li>
+      </ul></div>
+  </div>
+
+  <div class="feature">
+    <div class="shot"><img src="images/admin-grades-light.webp" alt="Teacher gradebook" loading="lazy"></div>
+    <div><h3>An LMS for teachers</h3>
+      <ul>
+        <li>Sections with class codes, activities with due dates, rubrics, extensions and a gradebook with Excel/PDF export.</li>
+        <li>Real-time chat, notifications and announcements (Supabase Realtime).</li>
+        <li>AI lesson drafts with a human in the loop: teachers review before publishing.</li>
+      </ul></div>
+  </div>
+
+  <div class="feature flip">
+    <div class="shot"><img src="images/admin-dashboard-light.webp" alt="Dashboard" loading="lazy"></div>
+    <div><h3>Secure, private and deployed</h3>
+      <ul>
+        <li>Row-level security on every table; deactivation, roles and limits enforced by the database, not just the UI.</li>
+        <li>Data Privacy Act (RA 10173) features: consent, download-my-data, delete-my-account.</li>
+        <li>Live on Vercel (custom domain salita.me) with a serverless Python backend and a signed Android release APK.</li>
+      </ul>
+      <p style="margin-top:16px"><a class="btn primary" href="https://salita.me" target="_blank" rel="noopener">Open salita.me ↗</a></p></div>
+  </div>
+</div></section>
+
+<section id="skills"><div class="wrap">
+  <h2>Skills</h2>
+  <p class="sub">What I've used to build and ship real features.</p>
+  <div class="grid g2">
+    <div class="card"><h3>Frontend</h3><div class="chips"><span class="chip">JavaScript (ES6+)</span><span class="chip">React</span><span class="chip">Vite</span><span class="chip">Tailwind CSS</span><span class="chip">HTML / CSS</span><span class="chip">Responsive design</span><span class="chip">Recharts</span></div></div>
+    <div class="card"><h3>Backend &amp; data</h3><div class="chips"><span class="chip">Python</span><span class="chip">Flask</span><span class="chip">REST APIs</span><span class="chip">PostgreSQL</span><span class="chip">SQL</span><span class="chip">Supabase (Auth, Storage, Realtime)</span><span class="chip">Row-Level Security</span></div></div>
+    <div class="card"><h3>AI &amp; mobile</h3><div class="chips"><span class="chip">Whisper speech-to-text</span><span class="chip">LLM APIs (Groq, Gemini)</span><span class="chip">Prompt design</span><span class="chip">Capacitor</span><span class="chip">Android Studio</span></div></div>
+    <div class="card"><h3>Tools &amp; practice</h3><div class="chips"><span class="chip">Git &amp; GitHub</span><span class="chip">Vercel</span><span class="chip">Security testing</span><span class="chip">Puppeteer</span><span class="chip">ESLint / Prettier</span><span class="chip">VS Code</span></div></div>
+  </div>
+</div></section>
+
+<section id="education"><div class="wrap">
+  <h2>Education</h2>
+  <div class="timeline">
+    <div class="item"><div class="when">[Start year] – [Expected graduation]</div>
+      <h3>Bachelor of Science in Information Technology</h3>
+      <p class="sub" style="margin:0">STI College San Jose del Monte, Bulacan · Capstone: <em>SaLitA — A Translanguaging-Based AI Speech Coaching System</em></p></div>
+  </div>
+</div></section>
+
+<section id="contact" class="contact"><div class="wrap">
+  <h2>Let's work together</h2>
+  <p class="sub" style="margin:0 auto">Open to internship / OJT and junior developer roles.</p>
+  <div class="actions">
+    <a class="btn primary" href="mailto:earldecastro333@gmail.com">Email me</a>
+    <a class="btn ghost" href="https://github.com/ineedsocialcredits0" target="_blank" rel="noopener">GitHub</a>
+    <a class="btn ghost" href="Earl-De-Castro-Resume.docx" download>Download résumé</a>
+  </div>
+</div></section>
+
+<footer>© 2026 Earl Dion I. De Castro · Built by hand, deployed on Vercel</footer>
+</body>
+</html>
