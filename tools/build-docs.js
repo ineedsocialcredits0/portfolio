@@ -52,44 +52,54 @@ const C = {
   close: 'Sincerely,',
 };
 
-// ---------- DOCX ----------
-const F = 'Calibri', GREEN = '0F6E55';
-const page = { size: { width: 12240, height: 15840 }, margin: { top: 900, bottom: 900, left: 1080, right: 1080 } };
-const t = (text, o = {}) => new TextRun({ text, font: F, ...o });
-const link = (text, url) => new ExternalHyperlink({ link: url, children: [t(text, { color: GREEN, underline: {} })] });
-const head = s => new Paragraph({ spacing: { before: 200, after: 80 }, keepNext: true, border: { bottom: { style: BorderStyle.SINGLE, size: 6, color: GREEN, space: 2 } }, children: [t(s.toUpperCase(), { bold: true, size: 22, color: GREEN })] });
-const row = (l, r) => new Paragraph({ tabStops: [{ type: TabStopType.RIGHT, position: 10080 }], spacing: { before: 60, after: 20 }, keepNext: true, children: [t(l, { bold: true, size: 21 }), t('\t' + r, { italics: true, color: '555555' })] });
-const line = (s, o = {}) => new Paragraph({ spacing: { after: 40 }, children: [t(s, o)] });
-const contact = () => [t(ME.place + ' · ' + ME.phone + ' · '), link(ME.email, 'mailto:' + ME.email), t(' · '), link(ME.portfolioText, ME.portfolio)];
+// ---------- DOCX (same look as the web pages: DESIGN.md system) ----------
+const F = 'Segoe UI', FS = 'Segoe UI Semibold', MONO = 'Consolas';
+const INK = '171717', BODY = '4D4D4D', MUTE = '6B6B6B', LINE = 'EBEBEB', MINT = '2DD4BF', LINK = '0D7C66';
+const page = { size: { width: 12240, height: 15840 }, margin: { top: 1000, bottom: 900, left: 1150, right: 1150 } };
+const CONTENT = 12240 - 2300;
+const t = (text, o = {}) => new TextRun({ text, font: F, color: BODY, ...o });
+const link = (text, url, o = {}) => new ExternalHyperlink({ link: url, children: [t(text, { color: INK, underline: { color: 'A1A1A1' }, ...o })] });
+const nameP = (size) => new Paragraph({ spacing: { after: 40 }, children: [t(ME.name, { font: FS, size, color: INK, characterSpacing: -14 })] });
+const contactP = () => new Paragraph({ spacing: { before: 100, after: 0 }, children: [
+  t(ME.place, { size: 18, color: MUTE }), t('     '), link(ME.phone, 'tel:' + ME.tel, { size: 18 }), t('     '),
+  link(ME.email, 'mailto:' + ME.email, { size: 18 }), t('     '), link(ME.portfolioText, ME.portfolio, { size: 18 })] });
+// short mint→sky accent line under the header (a bottom border on a narrow paragraph)
+const accent = () => new Paragraph({ spacing: { before: 120, after: 0 }, indent: { right: CONTENT - 820 }, border: { bottom: { style: BorderStyle.SINGLE, size: 18, color: MINT, space: 1 } }, children: [] });
+const label = s => new Paragraph({ spacing: { before: 300, after: 100 }, keepNext: true, children: [t(s.toUpperCase(), { font: MONO, size: 16, color: MUTE, characterSpacing: 20 })] });
+const row = (l, r) => new Paragraph({ tabStops: [{ type: TabStopType.RIGHT, position: CONTENT }], spacing: { before: 40, after: 20 }, keepNext: true,
+  children: [t(l, { font: FS, size: 21, color: INK }), t('\t' + r, { font: MONO, size: 17, color: MUTE })] });
+const line = (s, o = {}) => new Paragraph({ spacing: { after: 30, line: 276 }, children: [t(s, { size: 19, ...o })] });
 
 const resumeDoc = new Document({
-  styles: { default: { document: { run: { font: F, size: 20 } } } },
-  numbering: { config: [{ reference: 'b', levels: [{ level: 0, format: LevelFormat.BULLET, text: '•', alignment: AlignmentType.LEFT, style: { paragraph: { indent: { left: 360, hanging: 220 } } } }] }] },
+  styles: { default: { document: { run: { font: F, size: 20, color: BODY } } } },
+  numbering: { config: [{ reference: 'b', levels: [{ level: 0, format: LevelFormat.BULLET, text: '\u2022', alignment: AlignmentType.LEFT,
+    style: { run: { color: 'A1A1A1' }, paragraph: { indent: { left: 340, hanging: 220 } } } }] }] },
   sections: [{ properties: { page }, children: [
-    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 20 }, children: [t(ME.name.toUpperCase(), { bold: true, size: 36, color: GREEN })] }),
-    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 20 }, children: [t(ME.headline, { size: 21 })] }),
-    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 60 }, children: contact() }),
-    head('Summary'), line(R.summary),
-    head('Relevant Experience'),
+    nameP(48),
+    new Paragraph({ spacing: { after: 0 }, children: [t(ME.headline, { size: 21 })] }),
+    contactP(), accent(),
+    label('Summary'), line(R.summary, { size: 20 }),
+    label('Relevant experience'),
     row(R.project.title, R.project.when),
-    new Paragraph({ spacing: { after: 40 }, children: [t(R.project.sub + '  |  ', { italics: true, color: '555555' }), link(R.project.link, R.project.url)] }),
-    ...R.project.bullets.map(b => new Paragraph({ numbering: { reference: 'b', level: 0 }, spacing: { after: 40 }, children: [t(b)] })),
-    head('Skills'),
-    ...R.skills.map(([k, v]) => new Paragraph({ spacing: { after: 40 }, children: [t(k + ': ', { bold: true }), t(v)] })),
-    head('Education'),
-    row(R.education.degree, R.education.when), line(R.education.school), line(R.education.note, { italics: true, color: '555555' }),
+    new Paragraph({ spacing: { after: 60 }, children: [t(R.project.sub + '  \u00b7  ', { size: 18, color: MUTE }), link(R.project.link, R.project.url, { size: 18, color: LINK })] }),
+    ...R.project.bullets.map(b => new Paragraph({ numbering: { reference: 'b', level: 0 }, spacing: { after: 50, line: 264 }, children: [t(b, { size: 19 })] })),
+    label('Skills'),
+    ...R.skills.map(([k, v]) => new Paragraph({ tabStops: [{ type: TabStopType.LEFT, position: 2700 }], indent: { left: 2700, hanging: 2700 }, spacing: { after: 70, line: 264 },
+      children: [t(k, { font: FS, size: 19, color: INK }), t('\t' + v, { size: 19 })] })),
+    label('Education'),
+    row(R.education.degree, R.education.when), line(R.education.school, { color: BODY }), line(R.education.note, { italics: true, color: MUTE, size: 18 }),
   ] }],
 });
-const P = (s, after = 180) => new Paragraph({ spacing: { after, line: 276 }, children: [t(s, { size: 22 })] });
+const P = (s, after = 200, o = {}) => new Paragraph({ spacing: { after, line: 300 }, children: [t(s, { size: 21, color: INK, ...o })] });
 const coverDoc = new Document({
-  styles: { default: { document: { run: { font: F, size: 22 } } } },
-  sections: [{ properties: { page: { ...page, margin: { top: 1200, bottom: 1200, left: 1300, right: 1300 } } }, children: [
-    new Paragraph({ spacing: { after: 20 }, children: [t(ME.name.toUpperCase(), { bold: true, size: 30, color: GREEN })] }),
-    new Paragraph({ spacing: { after: 300 }, border: { bottom: { style: BorderStyle.SINGLE, size: 6, color: GREEN, space: 4 } }, children: contact().map(r => r) }),
-    P(C.date, 240),
-    ...C.to.map((s, i) => P(s, i === C.to.length - 1 ? 240 : 0)),
+  styles: { default: { document: { run: { font: F, size: 21, color: INK } } } },
+  sections: [{ properties: { page: { ...page, margin: { top: 1100, bottom: 1000, left: 1250, right: 1250 } } }, children: [
+    nameP(48), contactP(), accent(),
+    new Paragraph({ spacing: { before: 240, after: 360 }, border: { bottom: { style: BorderStyle.SINGLE, size: 4, color: LINE, space: 1 } }, children: [] }),
+    P(C.date, 260),
+    ...C.to.map((s, i) => P(s, i === C.to.length - 1 ? 260 : 0)),
     P(C.greet), ...C.paras.map(s => P(s)),
-    P(C.close, 480), P(ME.name, 0),
+    P(C.close, 560), P(ME.name, 0, { font: FS }),
   ] }],
 });
 
@@ -109,7 +119,7 @@ const shell = (title, docx, current, body) => `<!doctype html>
   <a class="btn btn-primary btn-sm" href="${docx}" download>Download .docx</a>
 </div></nav>
 <div class="doc-bar"><a class="btn btn-secondary btn-sm" href="index.html">← Portfolio</a>
-<div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="print()">Print / Save PDF</button><a class="btn btn-primary btn-sm" href="${docx}" download>Download .docx</a></div></div>
+<div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="print()">Print / Save PDF</button><a class="btn btn-secondary btn-sm" href="${docx.replace('.docx', '.png')}" download>Download image (HD)</a><a class="btn btn-primary btn-sm" href="${docx}" download>Download .docx</a></div></div>
 <main class="paper${current === 'cover' ? ' letter' : ''}">${body}</main></body></html>`;
 const contactHtml = `<p class="contact"><span>${esc(ME.place)}</span><a href="tel:${ME.tel}">${ME.phone}</a><a href="mailto:${ME.email}">${ME.email}</a><a href="${ME.portfolio}">${ME.portfolioText}</a></p>`;
 
